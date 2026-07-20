@@ -208,9 +208,9 @@ async def task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     # Шаг 1: Скачивание данных
     words = fetch_words()
-    logging.info("Успешно распарсили слов:" + len(words))
+    logging.info("Успешно распарсили слов:" + str(len(words)))
     grammar = fetch_grammar()
-    logging.info("Успешно распарсили грамар:" + len(grammar))
+    logging.info("Успешно распарсили грамар:" + str(len(grammar)))
 
     if not words or not grammar:
         await update.message.reply_text("Не удалось загрузить данные для задания. Попробуйте позже.")
