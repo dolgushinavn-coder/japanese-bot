@@ -93,7 +93,7 @@ def fetch_words() -> list:
             f = io.StringIO(resp.text)
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
-                logging.info(Парсим строку " + row)
+                logging.info("Парсим строку " + row)
                 jp = row.get('Japanese', '').strip()
                 if jp and jp not in all_words:
                     try:
@@ -124,7 +124,7 @@ def fetch_grammar() -> list:
         reader = csv.DictReader(f, delimiter=';')
         grammar_list = []
         for row in reader:
-            logging.info(Парсим строчку " + row)
+            logging.info("Парсим строчку " + row)
             front = row.get('Front', '').strip()
             if front:
                 grammar_list.append({
