@@ -94,7 +94,6 @@ def fetch_words() -> list:
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
                 jp = row.get('Japanese', '').strip()
-                logging.info("Парсим строку " + jp)
                 if jp and jp not in all_words:
                     try:
                         interval = float(row.get('Interval', 0) or 0)
@@ -125,7 +124,6 @@ def fetch_grammar() -> list:
         grammar_list = []
         for row in reader:
             front = row.get('Front', '').strip()
-            logging.info("Парсим строчку " + front)
             if front:
                 grammar_list.append({
                     'Front': front,
@@ -210,7 +208,9 @@ async def task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     # Шаг 1: Скачивание данных
     words = fetch_words()
+    logging.info("Успешно распарсили слов:" + len(words.size))
     grammar = fetch_grammar()
+    logging.info("Успешно распарсили грамар:" + len(grammar.size))
 
     if not words or not grammar:
         await update.message.reply_text("Не удалось загрузить данные для задания. Попробуйте позже.")
