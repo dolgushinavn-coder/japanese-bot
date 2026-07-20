@@ -81,15 +81,19 @@ def init_files() -> None:
 # ==============================================================================
 
 def fetch_words() -> list:
+    logging.info("Скачивает и объединяет все CSV со словами, удаляя дубликаты по Japanese")
     """Скачивает и объединяет все CSV со словами, удаляя дубликаты по Japanese."""
     all_words = {}
     for url in WORDS_URLS:
         try:
+            logging.info("Качаем " + url)
             resp = requests.get(url, timeout=10)
             resp.raise_for_status()
+            logging.info("Успешный запрос по " + url)
             f = io.StringIO(resp.text)
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
+                logging.info(Парсим строку " + row)
                 jp = row.get('Japanese', '').strip()
                 if jp and jp not in all_words:
                     try:
@@ -110,14 +114,17 @@ def fetch_words() -> list:
 
 
 def fetch_grammar() -> list:
+    logging.info("Скачивает CSV с грамматикой")
     """Скачивает CSV с грамматикой."""
     try:
         resp = requests.get(GRAMMAR_URL, timeout=10)
         resp.raise_for_status()
+        logging.info("Успешно скачали " + GRAMMAR_URL)
         f = io.StringIO(resp.text)
         reader = csv.DictReader(f, delimiter=';')
         grammar_list = []
         for row in reader:
+            logging.info(Парсим строчку " + row)
             front = row.get('Front', '').strip()
             if front:
                 grammar_list.append({
